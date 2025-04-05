@@ -1,6 +1,7 @@
 import {CONFIG} from '../config/index'
 const config = CONFIG()
 import jwt from 'jsonwebtoken'
+// console.log('Auth middleware triggered');
 
 function auth (req:any, res:any, next:any){
     const token = req.header('Authorization')

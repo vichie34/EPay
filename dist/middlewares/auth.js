@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("../config/index");
 const config = (0, index_1.CONFIG)();
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+// console.log('Auth middleware triggered');
 function auth(req, res, next) {
     const token = req.header('Authorization');
     if (!token)

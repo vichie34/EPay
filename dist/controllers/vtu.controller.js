@@ -22,9 +22,11 @@ const user_model_1 = require("../models/user.model");
 const payment_model_1 = require("../models/payment.model");
 const FetchNetworkID = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const response = yield axios_1.default.get(`${process.env.VTU_URL}/get/network/`, { headers: {
+        const response = yield axios_1.default.get(`${process.env.VTU_URL}/get/network/`, {
+            headers: {
                 'Authorization': `Token ${process.env.VTU_API_KEY}`
-            } });
+            }
+        });
         res.send(response.data);
     }
     catch (ex) {
@@ -33,19 +35,24 @@ const FetchNetworkID = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.FetchNetworkID = FetchNetworkID;
 const GetDataPlans = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        const response = yield axios_1.default.get(`${process.env.VTU_URL}/network`, { headers: {
+        const response = yield axios_1.default.get(`${process.env.VTU_URL}/network`, {
+            headers: {
                 'Authorization': `Token ${process.env.VTU_API_KEY}`
-            } });
+            }
+        });
         res.send(response.data);
     }
     catch (ex) {
+        // res.status(500).send('Server Error')
+        console.error('Error fetching data plans:', ((_a = ex.response) === null || _a === void 0 ? void 0 : _a.data) || ex.message);
         res.status(500).send('Server Error');
     }
 });
 exports.GetDataPlans = GetDataPlans;
 const BuyAirTime = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _b;
     const { error } = ValidateAirtimeReq(req.body);
     if (error)
         return res.status(400).send(error.details[0].message);
@@ -67,9 +74,11 @@ const BuyAirTime = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
             Ported_number: false,
         };
         console.log(payload);
-        const response = yield axios_1.default.post(`${process.env.VTU_URL}/topup/`, Object.assign({}, payload), { headers: {
+        const response = yield axios_1.default.post(`${process.env.VTU_URL}/topup/`, Object.assign({}, payload), {
+            headers: {
                 'Authorization': `Token ${process.env.VTU_API_KEY}`,
-            } });
+            }
+        });
         console.log(response.data);
         if (response.data.Status !== "successful")
             return res.status(400).send("something went wrong");
@@ -93,12 +102,12 @@ const BuyAirTime = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
     catch (ex) {
         res.status(500).send('Cannot process transaction now. Please refer to the Admin');
-        console.log((_a = ex.response) === null || _a === void 0 ? void 0 : _a.data);
+        console.log((_b = ex.response) === null || _b === void 0 ? void 0 : _b.data);
     }
 });
 exports.BuyAirTime = BuyAirTime;
 const BuyData = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b;
+    var _c;
     const { error } = ValidateDataReq(req.body);
     if (error)
         return res.status(400).send(error.details[0].message);
@@ -117,9 +126,11 @@ const BuyData = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
             Ported_number: false,
         };
         console.log(payload, planAmount);
-        const response = yield axios_1.default.post(`${process.env.VTU_URL}/data/`, Object.assign({}, payload), { headers: {
+        const response = yield axios_1.default.post(`${process.env.VTU_URL}/data/`, Object.assign({}, payload), {
+            headers: {
                 'Authorization': `Token ${process.env.VTU_API_KEY}`,
-            } });
+            }
+        });
         console.log(response.data);
         if (response.data.Status !== "successful")
             return res.status(400).send("something went wrong");
@@ -142,7 +153,7 @@ const BuyData = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     }
     catch (ex) {
         res.status(500).send('Cannot process transaction now. Please refer to the Admin');
-        console.log((_b = ex.response) === null || _b === void 0 ? void 0 : _b.data);
+        console.log((_c = ex.response) === null || _c === void 0 ? void 0 : _c.data);
     }
 });
 exports.BuyData = BuyData;
